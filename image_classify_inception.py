@@ -18,7 +18,7 @@ else:
     if os.path.normcase(rdataset_dir) != os.path.normcase(os.readlink(dataset_dir)):
         cmd = 'ln -sf %s %s'% (rdataset_dir, dataset_dir)
         os.system(cmd)
-command = 'python %s/models-master/research/slim/convert_data.py ' \
+command = 'python %s/research/slim/convert_data.py ' \
           '--dataset_name=%s ' \
           '--dataset_dir=%s' % (path_pre, dataset_name, dataset_dir)
 os.system(command)

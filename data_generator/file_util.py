@@ -561,67 +561,7 @@ def verify_label(src_dir):
 
 
 if __name__ == '__main__':
-    src_dir = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/log/dubang/100服务器/20180401"
-    dst_dir = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/log/dubang/100服务器/data"
-    # copy_files_overwrite(src_dir, dst_dir)
-    # assign_task(dst_dir, 6)
-    # delete_file_by_extension(src_dir, ".xml")
-    # rename_img_with_md5(src_dir, dst_dir)
-    # src = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-factory/singapore/windshield_data/damage'
-    # verify_label(src_dir=src)
-    # rootdir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/z-damage-data/data-jingyou/'
-    # xml_dir = rootdir+'aoxian'
-    # jpg_dir = rootdir + 'aoxian_labelme'
-    # # jpg_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/output_whole_20180515'
-    # dst_dir = rootdir + 'aoxian1'
-    # jpg_no_match_dir = rootdir + 'damage_no_match'
-    # find_xml_by_jpg(xml_dir, jpg_dir,dst_dir,jpg_no_match_dir)
-    # src = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage/d'
-    # dst = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage/val'
-    # copy_files_overwrite(src, dst)
-    # src_dir=rootdir+'whole-image-100G/dbic0703'
-    # dest_dir=rootdir+'whole-image-100G/dbic0703-rename'
-    # repeat_dir=rootdir+'whole-image-100G/dbic0703-repeat'
-    # abort_dir=rootdir+'whole-image-100G/dbic0703-abort'
-    # rename_file_with_md5(src_dir,dest_dir,repeat_dir,abort_dir)
-
-    # rootdir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-gxh/20190211-whole-jiahe/'
-    # xml_dir=rootdir+'20190211-xml-jiahe'
-    # jpg_dir='/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-gxh/20181025'
-    # dst_dir=rootdir+'data'
-    # xml_no_match_dir=rootdir+'no-match'
-    # find_jpg_by_xml(xml_dir,jpg_dir,dst_dir,xml_no_match_dir)
-
-    # rootdir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/'
-    # src_dir = rootdir + '20190211-whole-yunju'
-    # dst_dir = rootdir + 'data'
-    # # copy_files(src_dir,dst_dir)
-    # src_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage'
-    # dst_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage_3'
-    # copy_files_overwrite(src_dir,dst_dir)
-
-    # jpg_dir='/media/ubuntu/zhousf/nzm/banghao'
-    # xml_dir='/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-banghao/img_20180516/banghao-xml-jpg'
-    # find_xml_by_jpg_copy(xml_dir,jpg_dir)
-
-    # json_dir = '/media/ubuntu/zhousf/sy/student'
-    # jpg_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-banghao/img_20180516/student-xml-jpg'
-    # dst_dir = json_dir
-    # find_jpg_by_json(json_dir, jpg_dir, dst_dir)
-
-    # src_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-gxh/20190211-whole-yunju'
-    # assign_task(src_dir, task_num=50, extention='.json')
-
-    # delete_file_by_extension('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/'
-    #                          'workspace/zhousf_projects/kit_project/static/judges/task_20191219_3',
-    #                          '.xml')
-    # delete_file_by_extension('/media/ubuntu/zhousf/sy/banghao','.xml')
-    # delete_file_by_extension('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/test','.xml')
-    # delete_file_by_extension('/media/ubuntu/zhousf/nzm/banghao','.xml')
-    # delete_file_by_name('/home/ubuntu/zsf/dl/dataset-banghao','img.png')
-    # last_dir_names = {'aoxian', 'guaca','aoxian_guaca','aoxian_guaca_huahen','aoxian_huahen','guaca_hahen','huahen'}
-    # assign_image('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-gxh/201812-201901-jpg',2,last_dir_names)
-    # src_dir='/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage/d'
-    # dst_dir='/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/dataset-damage_enhanced/JPEGImages'
-    # delete_file_contained(src_dir, dst_dir)
+    pre_dir = os.getcwd()
+    src_dir = pre_dir+"/20180401"
+    dst_dir = pre_dir+""/data"
     pass

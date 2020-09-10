@@ -655,42 +655,8 @@ if __name__ == '__main__':
     #         img = os.path.join(root, file)
     #         definition = get_image_definition(img)
     #         print(file, definition, get_image_light_rms_sqrt(img))
-    src = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-factory/singapore/test/img"
-    dst = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-factory/singapore/test/not_rgb"
-    # rename_file_with_md5("/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/ocr_img/vin")
-    # check_img_rgb(src_dir=src, dst_dir=dst)
-    # a = cv2.imread('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/1/MT1042898-001/1.JPG')
-    # print(cv2.imwrite('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/1/MT1042898-001/1_1.JPG', a))
-    # compress_img('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/workspace/AI_TEST/img_test/')
-    # img_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/part'
-    # out_limit_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/part-limit'
-    # fetch_max_width_height(img_dir)
-    # move_limit_width_height(img_dir, out_limit_dir, 1920, 1920)
-    # img_dir = '/home/ubuntu/zsf/dl/sample'
-    # out_limit_dir = '/home/ubuntu/zsf/dl/sample-limit'
-    # fetch_max_width_height(img_dir)
-    # move_limit_width_height(img_dir,out_limit_dir,1024,768)
-    # image_path = '/home/ubuntu/zsf/1.jpg'
-    # img2gray(image_path)
-    # gray2rgb_single(image_path)
-    # show('/home/ubuntu/zsf/zhousf/213.JPG')
-    # dir = '/home/ubuntu/zsf/zhousf/plate'
-    # gray2rgb(dir)
-    # enhance_brightness('/home/ubuntu/zsf/tf/1.jpg')
-    # enhance_color('/home/ubuntu/zsf/tf/1.jpg')
-    # enhance_contrast('/home/ubuntu/zsf/tf/11.jpg')
-    # im = enhance_sharpness(img='/home/ubuntu/zsf/tf/11.jpg', show_img=False)
-    # a = im.save('/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/1.jpg')
-    # print(a)
-    # src_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage'
-    # dst_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/segment/whole/damage_enhanced'
-    # enhance(src_dir, dst_dir)
-    # image = Image.fromarray(cv2.cvtColor(resize, cv2.COLOR_BGR2RGB))
-    # enhance_overwrite(image)
 
-    # root_dir = '/home/ubuntu/zsf/dl/plate/'
-    # src_dir = root_dir + 'data/'
-    # dst_dir = root_dir + 'data_generate_sample/'
-    # op = ImgOperator(src_dir, dst_dir)
-    # op.auto_deal()
+    pre_dir = os.getcwd()
+    src_dir = pre_dir+"/test_img"
+    dst_dir = pre_dir+""/not_rgb"
     pass

@@ -5,17 +5,12 @@ tensorflow-slim下的inception_v3、inception_v4、inception_resnet_v2分类模�
 
 ## 相关截图
 ### 项目结构
-![](https://github.com/MrZhousf/tf-slim-inception/blob/master/pic/1.png?raw=true)
 
 ### 路径配置
 将path.sh中的路径修改成自己的路径即可
 ```
 #!/usr/bin/env bash
-export PYTHONPATH=$PYTHONPATH:/Users/zhousf/tensorflow/zhousf/tf-slim-inception/models-master
-export PYTHONPATH=$PYTHONPATH:/Users/zhousf/tensorflow/zhousf/tf-slim-inception/models-master/research
-export PYTHONPATH=$PYTHONPATH:/Users/zhousf/tensorflow/zhousf/tf-slim-inception/models-master/research/slim
-export PYTHONPATH=$PYTHONPATH:/Users/zhousf/tensorflow/zhousf/tf-slim-inception/models-master/research/slim/datasets
-export PYTHONPATH=$PYTHONPATH:/Users/zhousf/tensorflow/zhousf/tf-slim-inception
+export PYTHONPATH=$PYTHONPATH:{your_path}/conf
 ```
 
 ### 数据制作
@@ -40,6 +35,7 @@ image_classify_inception.py
 
 ### 测试
 eval_single_img.py
+eval_single_dir.py
 
 ### 模型配置文件
 * train_inception.py 配置训练的参数(网络模型选择，训练次数，batch_size、指定GPU等)

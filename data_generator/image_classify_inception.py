@@ -50,6 +50,11 @@ def check_data(img_dir, unqualified_dir):
 if __name__ == "__main__":
     _img_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/sorter'
     _unqualified_dir = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/sorter_unqualified"
+
+    pre_dir = os.getcwd()
+    _img_dir = pre_dir+"/sorter"
+    _unqualified_dir = pre_dir+"/sorter_unqualified"
+
     # check_data(img_dir=_img_dir, unqualified_dir=_unqualified_dir)
     from datasets import download_and_convert_sorter
     convert_record(img_dir=_img_dir, data_name="sorter", convert=download_and_convert_sorter)

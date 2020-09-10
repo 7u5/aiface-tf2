@@ -54,7 +54,7 @@ class Inception(object):
         self.learning_rate = learning_rate
         self.train_name = train_name
         self.gpu_with_train = gpu_with_train
-        self.model_dir = os.getcwd() + '/models-master/research/slim'
+        self.model_dir = os.getcwd() + '/research/slim'
         self.mymodels_dir = os.getcwd() + '/my_models'
         self.initial_checkpoint = self.mymodels_dir + '/' + model_name + '/' + model_name + '.ckpt'
         self.dataset = dataset
@@ -292,13 +292,13 @@ class TrainCommon(Inception):
     def __init__(self):
 
         name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
-        model_name = MODEL_INCEPTION_RESNET_V2
+        model_name = _GConf_train['default_model']
         train_name = name
         dataset = name
-        dataset_dir = '../data/'+ name
-        train_num = 3000000
-        batch_size = 32
-        gpu_with_train = '0'
+        dataset_dir = _GConf['data_dir'] +'/'+ name
+        train_num = _GConf_train['train_steps']
+        batch_size = _GConf_train['batch_size']
+        gpu_with_train = _GConf_train['gpu_set']
 
         Inception.__init__(self,
                            train_name=train_name,
@@ -309,27 +309,4 @@ class TrainCommon(Inception):
                            train_num=train_num,
                            batch_size=batch_size)
         #print(dump(Inception))
-
-
-
-
-class TrainBaldV2(Inception):
-
-    def __init__(self):
-        name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
-        model_name = MODEL_INCEPTION_RESNET_V2
-        train_name = name
-        dataset = name
-        dataset_dir = '../data/'+name
-        train_num = 3000000
-        batch_size = 32
-        gpu_with_train = '0'
-        Inception.__init__(self,
-                           train_name=train_name,
-                           dataset_dir=dataset_dir,
-                           gpu_with_train=gpu_with_train,
-                           model_name=model_name,
-                           dataset=dataset,
-                           train_num=train_num,
-                           batch_size=batch_size)
 
