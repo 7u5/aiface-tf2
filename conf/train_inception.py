@@ -9,6 +9,7 @@ import warnings
 import shutil
 import numpy as np
 
+from conf import config
 MODEL_INCEPTION_V3 = 'inception_v3'
 MODEL_INCEPTION_V4 = 'inception_v4'
 MODEL_INCEPTION_RESNET_V2 = 'inception_resnet_v2'
@@ -55,7 +56,7 @@ class Inception(object):
         self.train_name = train_name
         self.gpu_with_train = gpu_with_train
         self.model_dir = os.getcwd() + '/research/slim'
-        self.mymodels_dir = os.getcwd() + '/my_models'
+        self.mymodels_dir = os.getcwd() + '/models'
         self.initial_checkpoint = self.mymodels_dir + '/' + model_name + '/' + model_name + '.ckpt'
         self.dataset = dataset
         self.train_num = train_num
@@ -154,6 +155,7 @@ class Inception(object):
                                            self.image_size,
                                            self.batch_size)
         os.environ["CUDA_VISIBLE_DEVICES"] = self.gpu_with_train
+        print(eval_command)
         os.system(eval_command)
 
     def export(self):
@@ -292,6 +294,7 @@ class TrainCommon(Inception):
     def __init__(self):
 
         name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
+        global _GConf_train
         model_name = _GConf_train['default_model']
         train_name = name
         dataset = name

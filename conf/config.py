@@ -27,7 +27,7 @@ _GConf={
 
 #include 2 dir  slim_dir, slim_dir/dataset
 root_dir = os.path.dirname(os.getcwd()) + '/'
-for {k,v} in _GConf_include:
+for (k,v) in _GConf_include.items():
     if '_path' in k:
         sys.path.append(root_dir+v)
     

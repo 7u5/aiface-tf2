@@ -419,10 +419,10 @@ def dilate_demo():
     """
     from core.util.infer_segment import InferSegment
 
-    class_names_file = '/home/ubuntu/zsf/zhousf/tf_project/my_models/deeplabv3_dpc_cityscapes_trainfine/car/class_names.txt'
-    pb_model_path = '/home/ubuntu/zsf/zhousf/tf_project/my_models/deeplabv3_dpc_cityscapes_trainfine/car/export/129068/frozen_inference_graph.pb'
+    class_names_file = '../data/dilate/class_names.txt'
+    pb_model_path = 'models/frozen_inference_graph.pb'
     infer = InferSegment(input_size=513, label_file=class_names_file, pb_file=pb_model_path)
-    img = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/1.JPG'
+    img = '../data/test.jpg'
     class_label_map, seg_map, resized_im = infer.infer(img)
     seg_image = np.array(seg_map).astype(np.uint8)
     # 卷积核大小

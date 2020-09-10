@@ -1,4 +1,4 @@
 # cmd :
 #source train.sh
 source path.sh
-python eval.py
+python eval.py $1
