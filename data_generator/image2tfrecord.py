@@ -1,15 +1,11 @@
 # -*- coding:utf-8 -*-
 # Author:      zhousf
 # Date:        2018-12-25
-# File:        image_classify_inception.py
+# File:        image2tfrecoard.py
 # Description: 生成slim数据格式的tfRecord
 # 每个文件夹放一个类别图片即可
 # 数据制作： dataset_factory.py flowers.py download_and_cover_flowers.py
 
-# from datasets import download_and_convert_renbao
-# from datasets import download_and_convert_car_color
-# from datasets import download_and_convert_singapore
-# from datasets import download_and_convert_windscreen
 import os
 import img_util
 import file_util
@@ -48,9 +44,6 @@ def check_data(img_dir, unqualified_dir):
 
 
 if __name__ == "__main__":
-    _img_dir = '/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/sorter'
-    _unqualified_dir = "/media/ubuntu/b8f80802-d95a-41c3-b157-6f4e34967425/data-zhousf/sorter_unqualified"
-
     pre_dir = os.getcwd()
     _img_dir = pre_dir+"/sorter"
     _unqualified_dir = pre_dir+"/sorter_unqualified"
