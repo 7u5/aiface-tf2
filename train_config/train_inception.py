@@ -4,6 +4,7 @@
 # File:        train_inception.py
 # Description:  图片分类
 import os
+import sys
 import warnings
 import shutil
 import numpy as np
@@ -12,7 +13,16 @@ MODEL_INCEPTION_V3 = 'inception_v3'
 MODEL_INCEPTION_V4 = 'inception_v4'
 MODEL_INCEPTION_RESNET_V2 = 'inception_resnet_v2'
 
-
+#def dump(obj):
+#    newobj=obj
+#    if '__dict__' in dir(obj):
+#        newobj=obj.__dict__
+#    if ' object at ' in str(obj) and not newobj.has_key('__type__'):
+#        newobj['__type__']=str(obj)
+#    for attr in newobj:
+#        newobj[attr]=dump(newobj[attr])
+#    return newobj
+#
 class Inception(object):
 
     def __init__(self,
@@ -151,7 +161,9 @@ class Inception(object):
         check_file = []
         for i in range(0, len(file_list)):
             path = os.path.join(self.train_dir, file_list[i])
+            #print(path)
             if path.endswith(".index"):
+                #name, index = file_list[i].split("-")
                 name, index = path.split("-")
                 num, ext = index.split(".")
                 check_file.append(int(num))
@@ -228,28 +240,88 @@ class Inception(object):
                                                    output_node_name)
         print (result)
 
+    def vis_single_dir(self, image_path, class_names_file=None, pb_model_path=None, show=True):
+        if not os.path.exists(image_path):
+            warnings.warn(image_path+'不存在')
+            return
+        if class_names_file is None:
+            class_names_file = self.class_names_file
+        if pb_model_path is None:
+            file_list = os.listdir(self.save_model_dir)
+            check_file = []
+            for i in range(0, len(file_list)):
+                if os.path.isdir(os.path.join(self.save_model_dir, file_list[i])):
+                    check_file.append(int(file_list[i]))
+            if len(check_file) == 0:
+                warnings.warn('frozen_inference_graph.pb不存在')
+                return
+            max_num = str(max(check_file))
+            pb_model_path = self.save_model_dir + '/' + max_num + '/frozen_inference_graph.pb'
+            if not os.path.exists(pb_model_path):
+                warnings.warn(pb_model_path + '不存在')
+                return
+        output_node_name = self.output_node_name + ':0'
+        from slim import eval_single_image_inception
+        num_top_predictions = 5
+        files = os.listdir(image_path)
+        for f in files:
+            if(os.path.isfile(image_path + '/' + f)):
+                resul.append(eval_single_image_inception.infer(image_path,
+                                                   pb_model_path,
+                                                   class_names_file,
+                                                   self.image_size,
+                                                   num_top_predictions,
+                                                   output_node_name))
+        print (result)
+
+
+
     def vis(self):
         pass
 
     def show_eval(self, port=6007):
-        tensor_board = 'tensorboard --logdir %s/ --port %d' % (self.eval_dir, port)
+        tensor_board = 'tensorboard --logdir %s/ --host 127.0.0.1 --port %d' % (self.eval_dir, port)
         os.system(tensor_board)
 
     def show_train(self, port=6006):
-        tensor_board = 'tensorboard --logdir %s/ --port %d' % (self.train_dir, port)
+        tensor_board = 'tensorboard --logdir %s/ --host 127.0.0.1 --port %d' % (self.train_dir, port)
         os.system(tensor_board)
 
-
-
-
-class TrainFlowersV3(Inception):
+class TrainCommon(Inception):
 
     def __init__(self):
-        model_name = MODEL_INCEPTION_V3
-        train_name = 'flowers'
-        dataset = 'flowers'
-        dataset_dir = '../data/flowers'
-        train_num = 100000
+
+        name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
+        model_name = MODEL_INCEPTION_RESNET_V2
+        train_name = name
+        dataset = name
+        dataset_dir = '../data/'+ name
+        train_num = 3000000
+        batch_size = 32
+        gpu_with_train = '0'
+
+        Inception.__init__(self,
+                           train_name=train_name,
+                           dataset_dir=dataset_dir,
+                           gpu_with_train=gpu_with_train,
+                           model_name=model_name,
+                           dataset=dataset,
+                           train_num=train_num,
+                           batch_size=batch_size)
+        #print(dump(Inception))
+
+
+
+
+class TrainBaldV2(Inception):
+
+    def __init__(self):
+        name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
+        model_name = MODEL_INCEPTION_RESNET_V2
+        train_name = name
+        dataset = name
+        dataset_dir = '../data/'+name
+        train_num = 3000000
         batch_size = 32
         gpu_with_train = '0'
         Inception.__init__(self,
@@ -261,22 +333,3 @@ class TrainFlowersV3(Inception):
                            train_num=train_num,
                            batch_size=batch_size)
 
-
-class TrainFlowersV4(Inception):
-
-    def __init__(self):
-        model_name = MODEL_INCEPTION_V4
-        train_name = 'flowers'
-        dataset = 'flowers'
-        dataset_dir = '../data/flowers'
-        train_num = 500000
-        batch_size = 32
-        gpu_with_train = '1'
-        Inception.__init__(self,
-                           train_name=train_name,
-                           dataset_dir=dataset_dir,
-                           gpu_with_train=gpu_with_train,
-                           model_name=model_name,
-                           dataset=dataset,
-                           train_num=train_num,
-                           batch_size=batch_size)

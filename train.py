@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"]='3'
 from train_config import config
-
 
 '''
 训练
