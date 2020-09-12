@@ -112,10 +112,10 @@ tf.app.flags.DEFINE_float(
     'Starting value for the FTRL accumulators.')
 
 tf.app.flags.DEFINE_float(
-    'ftrl_l1', 0.0, 'The FTRL l1 regularization strength.')
+    'ftrl_l1', 0.01, 'The FTRL l1 regularization strength.')
 
 tf.app.flags.DEFINE_float(
-    'ftrl_l2', 0.0, 'The FTRL l2 regularization strength.')
+    'ftrl_l2', 0.02, 'The FTRL l2 regularization strength.')
 
 tf.app.flags.DEFINE_float(
     'momentum', 0.9,
@@ -140,10 +140,10 @@ tf.app.flags.DEFINE_string(
     'Specifies how the learning rate is decayed. One of "fixed", "exponential",'
     ' or "polynomial"')
 
-tf.app.flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
+tf.app.flags.DEFINE_float('learning_rate', 0.0001, 'Initial learning rate.')
 
 tf.app.flags.DEFINE_float(
-    'end_learning_rate', 0.0001,
+    'end_learning_rate', 0.00001,
     'The minimal end learning rate used by a polynomial decay learning rate.')
 
 tf.app.flags.DEFINE_float(
@@ -153,7 +153,7 @@ tf.app.flags.DEFINE_float(
     'learning_rate_decay_factor', 0.94, 'Learning rate decay factor.')
 
 tf.app.flags.DEFINE_float(
-    'num_epochs_per_decay', 2.0,
+    'num_epochs_per_decay', 1.0,
     'Number of epochs after which learning rate decays. Note: this flag counts '
     'epochs per clone but aggregates per sync replicas. So 1.0 means that '
     'each clone will go over full epoch individually, but replicas will go '
@@ -168,7 +168,7 @@ tf.app.flags.DEFINE_integer(
     'The Number of gradients to collect before updating params.')
 
 tf.app.flags.DEFINE_float(
-    'moving_average_decay', None,
+    'moving_average_decay', 1,
     'The decay to use for the moving average.'
     'If left as None, then moving averages are not used.')
 
