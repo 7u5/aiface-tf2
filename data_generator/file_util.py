@@ -559,6 +559,16 @@ def verify_label(src_dir):
     print(lab)
     print('total=%d'%total)
 
+#def dump(obj):
+#    newobj=obj
+#    if '__dict__' in dir(obj):
+#        newobj=obj.__dict__
+#    if ' object at ' in str(obj) and not newobj.has_key('__type__'):
+#        newobj['__type__']=str(obj)
+#    for attr in newobj:
+#        newobj[attr]=dump(newobj[attr])
+#    return newobj
+#
 
 if __name__ == '__main__':
     pre_dir = os.getcwd()
