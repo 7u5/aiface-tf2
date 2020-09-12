@@ -2,33 +2,40 @@
 
 import os
 import sys
-import train_inception
-_GConf_include={
+import conf.train_inception as train_inception
+_conf_include={
     'slim_path':'research/slim',
     'slim_dataset_path':'research/slim/dataset',
 }
 
-_GConf_train={
-    'default_model':'inception_resnetv2',
-    'train_steps':300000,
-    'batch_size':32,
+_conf_train={
+    'default_model':'inception_resnet_v2',
+    'train_steps':200,
+    'batch_size':16,
     'gpu_set':'0',
+    'optimizer':'adam',
+    'weight_decay': 0.0004,
+    'learning_rate_decay_type':'polynomial', #lr decay type
+    'gpu_mem_limit':'0.9',
 }
 
-_GConf={
+_conf={
     'default_model':'inception_resnetv2',
     'model_dir':'models',
     'data_dir':'../data',
+    'label_filename':'labels.txt',
 
     'tensorboard_host':'127.0.0.1',
     'tensorboard_train_port':'6006',
     'tensorboard_eval_port':'6007',
+	'train':_conf_train,
+	'include':_conf_include,
 }
 
 #include 2 dir  slim_dir, slim_dir/dataset
-root_dir = os.path.dirname(os.getcwd()) + '/'
-for (k,v) in _GConf_include.items():
+root_dir = os.getcwd() + '/'
+#print(root_dir)
+for (k,v) in _conf_include.items():
     if '_path' in k:
         sys.path.append(root_dir+v)
-    
 TRAIN_MODEL = train_inception.TrainCommon()

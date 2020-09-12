@@ -9,32 +9,22 @@ import warnings
 import shutil
 import numpy as np
 
-from conf import config
+import conf.config as config
 MODEL_INCEPTION_V3 = 'inception_v3'
 MODEL_INCEPTION_V4 = 'inception_v4'
 MODEL_INCEPTION_RESNET_V2 = 'inception_resnet_v2'
 
-#def dump(obj):
-#    newobj=obj
-#    if '__dict__' in dir(obj):
-#        newobj=obj.__dict__
-#    if ' object at ' in str(obj) and not newobj.has_key('__type__'):
-#        newobj['__type__']=str(obj)
-#    for attr in newobj:
-#        newobj[attr]=dump(newobj[attr])
-#    return newobj
-#
 class Inception(object):
 
     def __init__(self,
                  train_name='',
                  dataset_dir='',
                  gpu_with_train='0',
-                 model_name=MODEL_INCEPTION_V3,
+                 model_name=MODEL_INCEPTION_RESNET_V2,
                  dataset='flowers',
-                 train_num=10000000,
-                 batch_size=32,
-                 learning_rate=0.01,
+                 train_num=100000,
+                 batch_size=16,
+                 learning_rate=0.0001,
                  image_size=299):
         self.model_name = model_name
         model_node_name = ''
@@ -55,19 +45,19 @@ class Inception(object):
         self.learning_rate = learning_rate
         self.train_name = train_name
         self.gpu_with_train = gpu_with_train
-        self.model_dir = os.getcwd() + '/research/slim'
-        self.mymodels_dir = os.getcwd() + '/models'
+        self.model_dir = os.getcwd() + '/' + config._conf_include['slim_path']
+        self.mymodels_dir = os.getcwd() + '/' + config._conf['model_dir']
         self.initial_checkpoint = self.mymodels_dir + '/' + model_name + '/' + model_name + '.ckpt'
         self.dataset = dataset
         self.train_num = train_num
         self.batch_size = batch_size
         self.dataset_dir = dataset_dir
-        self.class_names_file = dataset_dir + '/labels.txt'
+        self.class_names_file = dataset_dir + '/' + config._conf['label_filename']
         train_model = self.mymodels_dir + "/" + self.model_name + "/" + self.train_name
-        class_names_file = train_model + '/labels.txt'
+        class_names_file = train_model + '/' + config._conf['label_filename']
         if not os.path.exists(class_names_file):
             if not os.path.exists(self.class_names_file):
-                warnings.warn(self.class_names_file + '不存在')
+                warnings.warn(self.class_names_file + ' dont exist')
             if not os.path.exists(train_model):
                 os.makedirs(train_model)
             shutil.copy(self.class_names_file, train_model)
@@ -114,11 +104,11 @@ class Inception(object):
             --max_number_of_steps=%d \
             --batch_size=%d \
             --learning_rate=%f \
-            --learning_rate_decay_type=fixed \
+            --learning_rate_decay_type=%s \
+            --optimizer=%s \
             --image_size=%d \
             --log_every_n_steps=10 \
-            --optimizer=rmsprop \
-            --weight_decay=0.00004 ' % (self.model_dir,
+            --weight_decay=%f ' % (self.model_dir,
                                         self.train_dir,
                                         self.dataset,
                                         self.dataset_dir,
@@ -129,7 +119,10 @@ class Inception(object):
                                         self.train_num,
                                         self.batch_size,
                                         self.learning_rate,
-                                        self.image_size)
+                                        config._conf_train['learning_rate_decay_type'],
+                                        config._conf_train['optimizer'],
+                                        self.image_size,
+                                        config._conf_train['weight_decay'])
         if self.gpu_with_train == '':
             train_command += '--clone_on_cpu=True'
         else:
@@ -294,14 +287,13 @@ class TrainCommon(Inception):
     def __init__(self):
 
         name = sys.argv[1] if len(sys.argv) > 0 else 'jewelry'
-        global _GConf_train
-        model_name = _GConf_train['default_model']
+        model_name = config._conf_train['default_model']
         train_name = name
         dataset = name
-        dataset_dir = _GConf['data_dir'] +'/'+ name
-        train_num = _GConf_train['train_steps']
-        batch_size = _GConf_train['batch_size']
-        gpu_with_train = _GConf_train['gpu_set']
+        dataset_dir = config._conf['data_dir'] +'/'+ name
+        train_num = config._conf['train']['train_steps']
+        batch_size = config._conf_train['batch_size']
+        gpu_with_train = config._conf_train['gpu_set']
 
         Inception.__init__(self,
                            train_name=train_name,
