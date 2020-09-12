@@ -6,38 +6,31 @@ tensorflow-slim下的inception_v3、inception_v4、inception_resnet_v2分类模�
 ## 相关截图
 ### 项目结构
 
-### 路径配置
-将path.sh中的路径修改成自己的路径即可
-```
-#!/usr/bin/env bash
-export PYTHONPATH=$PYTHONPATH:{your_path}/conf
-```
+{classname}是某个分类任务的名字，与 data/{classname} 样本目录相关
+pos_{classname} 为该分类正例, neg_{classname}为复例
 
 ### 数据制作
-image_classify_inception.py
+image2tfrecord.py
 数据制作请参考flowers
 
 ### 训练
-* train.py/train.sh
-* 终端中运行：source train.sh 即可
+* train.py {classname}
 
 ### 评估
-* eval.py/eval.sh
-* 终端中运行：source eval.sh 即可
+* eval.py {classname}
 
 ### 可视化
 * show_train.py 训练
 * show_eval.py 评估
 
 ### 导出模型
-* export.py/export.sh
-* 终端中运行：source export.sh 即可
+* export.py {classname}
 
 ### 测试
-eval_single_img.py
-eval_single_dir.py
+eval_single_img.py {classname}
+eval_single_dir.py {classname}
 
 ### 模型配置文件
 * train_inception.py 配置训练的参数(网络模型选择，训练次数，batch_size、指定GPU等)
-* config.py 指定训练的业务
+* config.py 配置文件
 
