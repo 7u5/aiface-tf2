@@ -34,7 +34,7 @@ _NAME=sys.argv[2].split('=')[1]
 _DIR=sys.argv[4].split('=')[1]
 _FILE_PATTERN = _NAME+'_%s_*.tfrecord'
 
-cmd = 'ls %s/%s_pos/* %s/%s_neg/*|wc -l'%(_DIR,_NAME,_DIR,_NAME)
+cmd = 'ls %s/pos_%s/* %s/neg_%s/*|wc -l'%(_DIR,_NAME,_DIR,_NAME)
 rt=int(os.popen(cmd).readlines()[0].strip())
 
 SPLITS_TO_SIZES = {'train': rt, 'validation': int(rt/9)}
