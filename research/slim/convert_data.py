@@ -47,7 +47,7 @@ tf.app.flags.DEFINE_string(
     'The directory where the output TFRecords and temporary files are saved.')
 
 
-cmd = 'ls %s/%s_pos/* %s/%s_neg/*|wc -l'%(FLAGS.dataset_dir,FLAGS.dataset_name,FLAGS.dataset_dir,FLAGS.dataset_name)
+cmd = 'ls %s/pos_%s/* %s/neg_%s/*|wc -l'%(FLAGS.dataset_dir,FLAGS.dataset_name,FLAGS.dataset_dir,FLAGS.dataset_name)
 rt=int(os.popen(cmd).readlines()[0].strip())
 
 
