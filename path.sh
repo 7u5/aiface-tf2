@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-PROJECT_DIR=`pwd`
-export PYTHONPATH=$PYTHONPATH:$PROJECT_DIR
-export PYTHONPATH=$PYTHONPATH:$PROJECT_DIR/conf
