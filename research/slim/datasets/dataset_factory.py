@@ -25,7 +25,6 @@ import imagenet
 import mnist
 import dogs
 import cards
-import bald
 import common
 
 import tensorflow as tf
@@ -37,7 +36,6 @@ datasets_map = {
     'imagenet': imagenet,
     'mnist': mnist,
     'dogs':dogs,
-    'bald':bald,
     'cards':cards,
     _NAME:common,
 }
