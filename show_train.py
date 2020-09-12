@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from conf import config
+import conf.config as config
 
 '''
 显示训练结果

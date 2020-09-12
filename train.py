@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
-os.environ["TF_CPP_MIN_LOG_LEVEL"]='3'
-from conf import config
+#os.environ["TF_CPP_MIN_LOG_LEVEL"]='3'
+import conf.config as config
 
 '''
 训练

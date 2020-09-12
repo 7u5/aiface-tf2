@@ -6,7 +6,7 @@
 # 每个文件夹放一个类别图片即可
 import os
 import sys
-from conf import config
+import conf.config as config
 
 dataset_name = sys.argv[1] if len(sys.argv) > 1 else 'bald'
 rdataset_dir = sys.argv[2] if len(sys.argv) > 2 else '/mnt/sda1/ml/image_data/'+dataset_name+'/train'
