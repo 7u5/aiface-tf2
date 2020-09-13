@@ -3,7 +3,8 @@
 # Date:        2018-12-29
 # File:        show_image.py
 # Description:  
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 setname = bald
 from datasets import bald
 import pylab

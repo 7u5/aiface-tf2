@@ -156,7 +156,8 @@ TF-Slim
 is found below:
 
 ```python
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from datasets import flowers
 
 import tf_slim as slim
