@@ -18,7 +18,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from datasets import dataset_factory
 from deployment import model_deploy
@@ -26,7 +26,7 @@ from nets import nets_factory
 from preprocessing import preprocessing_factory
 import os,sys
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 tf.app.flags.DEFINE_string(
     'master', '', 'The address of the TensorFlow master to use.')
@@ -388,7 +388,7 @@ def _get_variables_to_train():
 
   variables_to_train = []
   for scope in scopes:
-    variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)
+    variables = tf.get_collection(tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, scope)
     variables_to_train.extend(variables)
   return variables_to_train
 
@@ -483,13 +483,13 @@ def main(_):
       return end_points
 
     # Gather initial summaries.
-    summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
+    summaries = set(tf.get_collection(tf.compat.v1.GraphKeys.SUMMARIES))
 
     clones = model_deploy.create_clones(deploy_config, clone_fn, [batch_queue])
     first_clone_scope = deploy_config.clone_scope(0)
     # Gather update_ops from the first clone. These contain, for example,
     # the updates for the batch_norm variables created by network_fn.
-    update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, first_clone_scope)
+    update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS, first_clone_scope)
 
     # Add summaries for end_points.
     end_points = clones[0].outputs
@@ -500,7 +500,7 @@ def main(_):
                                       tf.nn.zero_fraction(x)))
 
     # Add summaries for losses.
-    for loss in tf.get_collection(tf.GraphKeys.LOSSES, first_clone_scope):
+    for loss in tf.get_collection(tf.compat.v1.GraphKeys.LOSSES, first_clone_scope):
       summaries.add(tf.summary.scalar('losses/%s' % loss.op.name, loss))
 
     # Add summaries for variables.
@@ -517,9 +517,9 @@ def main(_):
     else:
       moving_average_variables, variable_averages = None, None
 
-    if FLAGS.quantize_delay >= 0:
-      tf.contrib.quantize.create_training_graph(
-          quant_delay=FLAGS.quantize_delay)
+    #if FLAGS.quantize_delay >= 0:
+    #  tf.contrib.quantize.create_training_graph(
+    #      quant_delay=FLAGS.quantize_delay)
 
     #########################################
     # Configure the optimization procedure. #
@@ -564,7 +564,7 @@ def main(_):
 
     # Add the summaries from the first clone. These contain the summaries
     # created by model_fn and either optimize_clones() or _gather_clone_loss().
-    summaries |= set(tf.get_collection(tf.GraphKeys.SUMMARIES,
+    summaries |= set(tf.get_collection(tf.compat.v1.GraphKeys.SUMMARIES,
                                        first_clone_scope))
 
     # Merge all summaries together.

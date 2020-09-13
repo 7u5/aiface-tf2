@@ -36,13 +36,13 @@ import tensorflow as tf
 
 from datasets import dataset_utils
 
-FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string(
+FLAGS = tf.compat.v1.app.flags.FLAGS
+tf.compat.v1.app.flags.DEFINE_string(
     'dataset_name',
     None,
     'The name of the dataset to convert, one of "cifar10", "flowers", "mnist".')
 
-tf.app.flags.DEFINE_string(
+tf.compat.v1.app.flags.DEFINE_string(
     'dataset_dir',
     None,
     'The directory where the output TFRecords and temporary files are saved.')
@@ -236,4 +236,4 @@ def main(_):
   #      'dataset_name [%s] was not recognized.' % FLAGS.dataset_name)
 
 if __name__ == '__main__':
-  tf.app.run()
+  tf.compat.v1.app.run()

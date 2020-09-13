@@ -63,43 +63,43 @@ from datasets import dataset_factory
 from nets import nets_factory
 
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
-tf.app.flags.DEFINE_string(
+tf.compat.v1.app.flags.DEFINE_string(
     'model_name', 'inception_v3', 'The name of the architecture to save.')
 
-tf.app.flags.DEFINE_boolean(
+tf.compat.v1.app.flags.DEFINE_boolean(
     'is_training', False,
     'Whether to save out a training-focused version of the model.')
 
-tf.app.flags.DEFINE_integer(
+tf.compat.v1.app.flags.DEFINE_integer(
     'image_size', None,
     'The image size to use, otherwise use the model default_image_size.')
 
-tf.app.flags.DEFINE_integer(
+tf.compat.v1.app.flags.DEFINE_integer(
     'batch_size', None,
     'Batch size for the exported model. Defaulted to "None" so batch size can '
     'be specified at model runtime.')
 
-tf.app.flags.DEFINE_string('dataset_name', 'imagenet',
+tf.compat.v1.app.flags.DEFINE_string('dataset_name', 'imagenet',
                            'The name of the dataset to use with the model.')
 
-tf.app.flags.DEFINE_integer(
+tf.compat.v1.app.flags.DEFINE_integer(
     'labels_offset', 0,
     'An offset for the labels in the dataset. This flag is primarily used to '
     'evaluate the VGG and ResNet architectures which do not use a background '
     'class for the ImageNet dataset.')
 
-tf.app.flags.DEFINE_string(
+tf.compat.v1.app.flags.DEFINE_string(
     'output_file', '', 'Where to save the resulting file to.')
 
-tf.app.flags.DEFINE_string(
+tf.compat.v1.app.flags.DEFINE_string(
     'dataset_dir', '', 'Directory to save intermediate dataset files to')
 
-tf.app.flags.DEFINE_bool(
+tf.compat.v1.app.flags.DEFINE_bool(
     'quantize', False, 'whether to use quantized graph or not.')
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = tf.compat.v1.app.flags.FLAGS
 
 
 def main(_):
@@ -119,8 +119,8 @@ def main(_):
                                         image_size, 3])
     network_fn(placeholder)
 
-    if FLAGS.quantize:
-      tf.contrib.quantize.create_eval_graph()
+    #if FLAGS.quantize:
+    #  tf.contrib.quantize.create_eval_graph()
 
     graph_def = graph.as_graph_def()
     with gfile.GFile(FLAGS.output_file, 'wb') as f:
@@ -128,4 +128,4 @@ def main(_):
 
 
 if __name__ == '__main__':
-  tf.app.run()
+  tf.compat.v1.app.run()

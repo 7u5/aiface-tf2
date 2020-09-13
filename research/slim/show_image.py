@@ -8,7 +8,7 @@ setname = bald
 from datasets import bald
 import pylab
 
-slim = tf.contrib.slim
+import tf_slim as slim
 pre = ""
 DATA_DIR = pre + "/" + setname
 
