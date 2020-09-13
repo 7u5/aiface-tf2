@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-import conf.config import conf
+import conf.config as config
 
 '''
 导出模型
