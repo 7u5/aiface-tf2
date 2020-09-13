@@ -28,7 +28,7 @@ import tensorflow as tf
 
 from datasets import dataset_utils
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 _NAME=sys.argv[2].split('=')[1]
 _DIR=sys.argv[4].split('=')[1]
@@ -38,8 +38,6 @@ cmd = 'ls %s/pos_%s/* %s/neg_%s/*|wc -l'%(_DIR,_NAME,_DIR,_NAME)
 rt=int(os.popen(cmd).readlines()[0].strip())
 
 SPLITS_TO_SIZES = {'train': rt, 'validation': int(rt/9)}
-#print(sys.argv)
-#sys.exit(0)
 _NUM_CLASSES = 2
 
 _ITEMS_TO_DESCRIPTIONS = {

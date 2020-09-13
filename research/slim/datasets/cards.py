@@ -27,7 +27,7 @@ import tensorflow as tf
 
 import dataset_utils
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 _FILE_PATTERN = 'cards_%s_*.tfrecord'
 

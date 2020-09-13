@@ -19,24 +19,12 @@ from __future__ import division
 from __future__ import print_function
 
 import sys
-import cifar10
-import flowers
-import imagenet
-import mnist
-import dogs
-import cards
 import common
 
 import tensorflow as tf
 _NAME=sys.argv[2].split('=')[1]
 
 datasets_map = {
-    'cifar10': cifar10,
-    'flowers': flowers,
-    'imagenet': imagenet,
-    'mnist': mnist,
-    'dogs':dogs,
-    'cards':cards,
     _NAME:common,
 }
 

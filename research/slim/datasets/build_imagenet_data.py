@@ -97,19 +97,19 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 
 
-tf.app.flags.DEFINE_string('train_directory', '/tmp/',
+tf.compat.v1.app.flags.DEFINE_string('train_directory', '/tmp/',
                            'Training data directory')
-tf.app.flags.DEFINE_string('validation_directory', '/tmp/',
+tf.compat.v1.app.flags.DEFINE_string('validation_directory', '/tmp/',
                            'Validation data directory')
-tf.app.flags.DEFINE_string('output_directory', '/tmp/',
+tf.compat.v1.app.flags.DEFINE_string('output_directory', '/tmp/',
                            'Output data directory')
 
-tf.app.flags.DEFINE_integer('train_shards', 1024,
+tf.compat.v1.app.flags.DEFINE_integer('train_shards', 1024,
                             'Number of shards in training TFRecord files.')
-tf.app.flags.DEFINE_integer('validation_shards', 128,
+tf.compat.v1.app.flags.DEFINE_integer('validation_shards', 128,
                             'Number of shards in validation TFRecord files.')
 
-tf.app.flags.DEFINE_integer('num_threads', 8,
+tf.compat.v1.app.flags.DEFINE_integer('num_threads', 8,
                             'Number of threads to preprocess the images.')
 
 # The labels file contains a list of valid labels are held in this file.
@@ -120,7 +120,7 @@ tf.app.flags.DEFINE_integer('num_threads', 8,
 # where each line corresponds to a label expressed as a synset. We map
 # each synset contained in the file to an integer (based on the alphabetical
 # ordering). See below for details.
-tf.app.flags.DEFINE_string('labels_file',
+tf.compat.v1.app.flags.DEFINE_string('labels_file',
                            'imagenet_lsvrc_2015_synsets.txt',
                            'Labels file')
 
@@ -133,7 +133,7 @@ tf.app.flags.DEFINE_string('labels_file',
 #
 # where each line corresponds to a unique mapping. Note that each line is
 # formatted as <synset>\t<human readable label>.
-tf.app.flags.DEFINE_string('imagenet_metadata_file',
+tf.compat.v1.app.flags.DEFINE_string('imagenet_metadata_file',
                            'imagenet_metadata.txt',
                            'ImageNet metadata file')
 
@@ -149,11 +149,11 @@ tf.app.flags.DEFINE_string('imagenet_metadata_file',
 #
 # Note that there might exist mulitple bounding box annotations associated
 # with an image file.
-tf.app.flags.DEFINE_string('bounding_box_file',
+tf.compat.v1.app.flags.DEFINE_string('bounding_box_file',
                            './imagenet_2012_bounding_boxes.csv',
                            'Bounding box file')
 
-FLAGS = tf.app.flags.FLAGS
+FLAGS = tf.compat.v1.app.flags.FLAGS
 
 
 def _int64_feature(value):
@@ -701,4 +701,4 @@ def main(unused_argv):
 
 
 if __name__ == '__main__':
-  tf.app.run()
+  tf.compat.v1.app.run()
