@@ -10,7 +10,7 @@ _conf_include={
 
 _conf_train={
     'default_model':'inception_resnet_v2',
-    'train_steps':200,
+    'train_steps':2000,
     'batch_size':16,
     'gpu_set':'0',
     'optimizer':'adam',
