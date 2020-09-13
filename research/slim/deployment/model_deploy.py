@@ -101,9 +101,9 @@ from __future__ import print_function
 
 import collections
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 __all__ = ['create_clones',
@@ -148,13 +148,13 @@ def create_clones(config, model_fn, args=None, kwargs=None):
   `Clone(outputs, scope, device)`
 
   Note: it is assumed that any loss created by `model_fn` is collected at
-  the tf.GraphKeys.LOSSES collection.
+  the tf.compat.v1.GraphKeys.LOSSES collection.
 
   To recover the losses, summaries or update_ops created by the clone use:
   ```python
-    losses = tf.get_collection(tf.GraphKeys.LOSSES, clone.scope)
-    summaries = tf.get_collection(tf.GraphKeys.SUMMARIES, clone.scope)
-    update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, clone.scope)
+    losses = tf.get_collection(tf.compat.v1.GraphKeys.LOSSES, clone.scope)
+    summaries = tf.get_collection(tf.compat.v1.GraphKeys.SUMMARIES, clone.scope)
+    update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS, clone.scope)
   ```
 
   The deployment options are specified by the config object and support
@@ -215,7 +215,7 @@ def _gather_clone_loss(clone, num_clones, regularization_losses):
   # Compute and aggregate losses on the clone device.
   with tf.device(clone.device):
     all_losses = []
-    clone_losses = tf.get_collection(tf.GraphKeys.LOSSES, clone.scope)
+    clone_losses = tf.get_collection(tf.compat.v1.GraphKeys.LOSSES, clone.scope)
     if clone_losses:
       clone_loss = tf.add_n(clone_losses, name='clone_loss')
       if num_clones > 1:
@@ -275,7 +275,7 @@ def optimize_clones(clones, optimizer,
    clones: List of `Clones` created by `create_clones()`.
    optimizer: An `Optimizer` object.
    regularization_losses: Optional list of regularization losses. If None it
-     will gather them from tf.GraphKeys.REGULARIZATION_LOSSES. Pass `[]` to
+     will gather them from tf.compat.v1.GraphKeys.REGULARIZATION_LOSSES. Pass `[]` to
      exclude them.
    **kwargs: Optional list of keyword arguments to pass to `compute_gradients`.
 
@@ -292,7 +292,7 @@ def optimize_clones(clones, optimizer,
   num_clones = len(clones)
   if regularization_losses is None:
     regularization_losses = tf.get_collection(
-        tf.GraphKeys.REGULARIZATION_LOSSES)
+        tf.compat.v1.GraphKeys.REGULARIZATION_LOSSES)
   for clone in clones:
     with tf.name_scope(clone.scope):
       clone_loss, clone_grad = _optimize_clone(
@@ -346,7 +346,7 @@ def deploy(config,
 
   """
   # Gather initial summaries.
-  summaries = set(tf.get_collection(tf.GraphKeys.SUMMARIES))
+  summaries = set(tf.get_collection(tf.compat.v1.GraphKeys.SUMMARIES))
 
   # Create Clones.
   clones = create_clones(config, model_fn, args, kwargs)
@@ -354,7 +354,7 @@ def deploy(config,
 
   # Gather update_ops from the first clone. These contain, for example,
   # the updates for the batch_norm variables created by model_fn.
-  update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, first_clone.scope)
+  update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS, first_clone.scope)
 
   train_op = None
   total_loss = None
@@ -383,7 +383,7 @@ def deploy(config,
     else:
       clones_losses = []
       regularization_losses = tf.get_collection(
-          tf.GraphKeys.REGULARIZATION_LOSSES)
+          tf.compat.v1.GraphKeys.REGULARIZATION_LOSSES)
       for clone in clones:
         with tf.name_scope(clone.scope):
           clone_loss = _gather_clone_loss(clone, len(clones),
@@ -397,7 +397,7 @@ def deploy(config,
 
     # Add the summaries from the first clone. These contain the summaries
     # created by model_fn and either optimize_clones() or _gather_clone_loss().
-    summaries |= set(tf.get_collection(tf.GraphKeys.SUMMARIES,
+    summaries |= set(tf.get_collection(tf.compat.v1.GraphKeys.SUMMARIES,
                                        first_clone.scope))
 
     if total_loss is not None:

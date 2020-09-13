@@ -23,7 +23,7 @@ import tensorflow as tf
 
 from deployment import model_deploy
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 class DeploymentConfigTest(tf.test.TestCase):
@@ -149,7 +149,7 @@ class DeploymentConfigTest(tf.test.TestCase):
 def LogisticClassifier(inputs, labels, scope=None, reuse=None):
   with tf.variable_scope(scope, 'LogisticClassifier', [inputs, labels],
                          reuse=reuse):
-    predictions = slim.fully_connected(inputs, 1, activation_fn=tf.sigmoid,
+    predictions = slim.layers.fully_connected(inputs, 1, activation_fn=tf.sigmoid,
                                        scope='fully_connected')
     slim.losses.log_loss(predictions, labels)
     return predictions
@@ -158,8 +158,8 @@ def LogisticClassifier(inputs, labels, scope=None, reuse=None):
 def BatchNormClassifier(inputs, labels, scope=None, reuse=None):
   with tf.variable_scope(scope, 'BatchNormClassifier', [inputs, labels],
                          reuse=reuse):
-    inputs = slim.batch_norm(inputs, decay=0.1, fused=True)
-    predictions = slim.fully_connected(inputs, 1,
+    inputs = slim.layers.batch_norm(inputs, decay=0.1, fused=True)
+    predictions = slim.layers.fully_connected(inputs, 1,
                                        activation_fn=tf.sigmoid,
                                        scope='fully_connected')
     slim.losses.log_loss(predictions, labels)
@@ -203,7 +203,7 @@ class CreatecloneTest(tf.test.TestCase):
       self.assertEqual(clone.scope, '')
       self.assertDeviceEqual(clone.device, 'GPU:0')
       self.assertEqual(len(slim.losses.get_losses()), 1)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(update_ops, [])
 
   def testCreateSingleclone(self):
@@ -229,7 +229,7 @@ class CreatecloneTest(tf.test.TestCase):
       self.assertEqual(clone.scope, '')
       self.assertDeviceEqual(clone.device, 'GPU:0')
       self.assertEqual(len(slim.losses.get_losses()), 1)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), 2)
 
   def testCreateMulticlone(self):
@@ -255,7 +255,7 @@ class CreatecloneTest(tf.test.TestCase):
         self.assertEqual(
             clone.outputs.op.name,
             'clone_%d/BatchNormClassifier/fully_connected/Sigmoid' % i)
-        update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, clone.scope)
+        update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS, clone.scope)
         self.assertEqual(len(update_ops), 2)
         self.assertEqual(clone.scope, 'clone_%d/' % i)
         self.assertDeviceEqual(clone.device, 'GPU:%d' % i)
@@ -341,7 +341,7 @@ class OptimizeclonesTest(tf.test.TestCase):
       self.assertEqual(slim.get_variables(), [])
       clones = model_deploy.create_clones(deploy_config, model_fn, clone_args)
       self.assertEqual(len(slim.get_variables()), 2)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(update_ops, [])
 
       optimizer = tf.train.GradientDescentOptimizer(learning_rate=1.0)
@@ -367,7 +367,7 @@ class OptimizeclonesTest(tf.test.TestCase):
       self.assertEqual(slim.get_variables(), [])
       clones = model_deploy.create_clones(deploy_config, model_fn, clone_args)
       self.assertEqual(len(slim.get_variables()), 5)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), 2)
 
       optimizer = tf.train.GradientDescentOptimizer(learning_rate=1.0)
@@ -394,7 +394,7 @@ class OptimizeclonesTest(tf.test.TestCase):
       self.assertEqual(slim.get_variables(), [])
       clones = model_deploy.create_clones(deploy_config, model_fn, clone_args)
       self.assertEqual(len(slim.get_variables()), 5)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), num_clones * 2)
 
       optimizer = tf.train.GradientDescentOptimizer(learning_rate=1.0)
@@ -422,7 +422,7 @@ class OptimizeclonesTest(tf.test.TestCase):
       self.assertEqual(slim.get_variables(), [])
       clones = model_deploy.create_clones(deploy_config, model_fn, model_args)
       self.assertEqual(len(slim.get_variables()), 5)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), num_clones * 2)
 
       optimizer = tf.train.GradientDescentOptimizer(learning_rate=1.0)
@@ -449,7 +449,7 @@ class OptimizeclonesTest(tf.test.TestCase):
       self.assertEqual(slim.get_variables(), [])
       clones = model_deploy.create_clones(deploy_config, model_fn, model_args)
       self.assertEqual(len(slim.get_variables()), 5)
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), 2)
 
       optimizer = tf.train.GradientDescentOptimizer(learning_rate=1.0)
@@ -499,7 +499,7 @@ class DeployTest(tf.test.TestCase):
       model = model_deploy.deploy(deploy_config, model_fn, model_args,
                                   optimizer=optimizer)
 
-      update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+      update_ops = tf.get_collection(tf.compat.v1.GraphKeys.UPDATE_OPS)
       self.assertEqual(len(update_ops), 4)
       self.assertEqual(len(model.clones), 2)
       self.assertEqual(model.total_loss.op.name, 'total_loss')
@@ -508,9 +508,9 @@ class DeployTest(tf.test.TestCase):
 
       with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
-        moving_mean = tf.contrib.framework.get_variables_by_name(
+        moving_mean = slim.get_variables_by_name(
             'moving_mean')[0]
-        moving_variance = tf.contrib.framework.get_variables_by_name(
+        moving_variance = slim.get_variables_by_name(
             'moving_variance')[0]
         initial_loss = sess.run(model.total_loss)
         initial_mean, initial_variance = sess.run([moving_mean,
@@ -537,8 +537,8 @@ class DeployTest(tf.test.TestCase):
       # clone function creates a fully_connected layer with a regularizer loss.
       def ModelFn():
         inputs = tf.constant(1.0, shape=(10, 20), dtype=tf.float32)
-        reg = tf.contrib.layers.l2_regularizer(0.001)
-        tf.contrib.layers.fully_connected(inputs, 30, weights_regularizer=reg)
+        reg = tf.slim.layers.l2_regularizer(0.001)
+        slim.layers.fully_connected(inputs, 30, weights_regularizer=reg)
 
       model = model_deploy.deploy(
           deploy_config, ModelFn,
@@ -556,8 +556,8 @@ class DeployTest(tf.test.TestCase):
       # clone function creates a fully_connected layer with a regularizer loss.
       def ModelFn():
         inputs = tf.constant(1.0, shape=(10, 20), dtype=tf.float32)
-        reg = tf.contrib.layers.l2_regularizer(0.001)
-        tf.contrib.layers.fully_connected(inputs, 30, weights_regularizer=reg)
+        reg = tf.slim.layers.l2_regularizer(0.001)
+        slim.layers.fully_connected(inputs, 30, weights_regularizer=reg)
 
       # No optimizer here, it's an eval.
       model = model_deploy.deploy(deploy_config, ModelFn)
