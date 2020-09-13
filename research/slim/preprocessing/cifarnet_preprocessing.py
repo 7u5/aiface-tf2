@@ -24,7 +24,7 @@ import tensorflow as tf
 
 _PADDING = 4
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 def preprocess_for_train(image,
