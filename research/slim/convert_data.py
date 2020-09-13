@@ -32,6 +32,7 @@ import random
 import sys
 
 import tensorflow as tf
+#import conf.config as config
 
 from datasets import dataset_utils
 
