@@ -33,9 +33,7 @@ _conf={
 	'include':_conf_include,
 }
 
-#include 2 dir  slim_dir, slim_dir/dataset
 root_dir = os.getcwd() + '/'
-#print(root_dir)
 for (k,v) in _conf_include.items():
     #if '_path' in k:
     sys.path.append(root_dir+v)
