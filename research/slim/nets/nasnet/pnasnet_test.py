@@ -21,7 +21,7 @@ import tensorflow as tf
 
 from nets.nasnet import pnasnet
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 class PNASNetTest(tf.test.TestCase):

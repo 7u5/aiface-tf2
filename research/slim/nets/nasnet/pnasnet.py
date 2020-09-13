@@ -27,13 +27,13 @@ import tensorflow as tf
 from nets.nasnet import nasnet
 from nets.nasnet import nasnet_utils
 
-arg_scope = tf.contrib.framework.arg_scope
-slim = tf.contrib.slim
+import tf_slim as slim
+arg_scope = slim.arg_scope
 
 
 def large_imagenet_config():
   """Large ImageNet configuration based on PNASNet-5."""
-  return tf.contrib.training.HParams(
+  return slim.training.HParams(
       stem_multiplier=3.0,
       dense_dropout_keep_prob=0.5,
       num_cells=12,
@@ -51,7 +51,7 @@ def large_imagenet_config():
 
 def mobile_imagenet_config():
   """Mobile ImageNet configuration based on PNASNet-5."""
-  return tf.contrib.training.HParams(
+  return slim.training.HParams(
       stem_multiplier=1.0,
       dense_dropout_keep_prob=0.5,
       num_cells=9,

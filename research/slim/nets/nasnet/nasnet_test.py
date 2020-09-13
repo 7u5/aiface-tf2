@@ -21,7 +21,7 @@ import tensorflow as tf
 
 from nets.nasnet import nasnet
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
 
 class NASNetTest(tf.test.TestCase):
@@ -294,9 +294,9 @@ class NASNetTest(tf.test.TestCase):
     with tf.variable_scope('on_gpu'), tf.device('/gpu:0'):
       with slim.arg_scope(nasnet.nasnet_mobile_arg_scope()):
         nasnet.build_nasnet_mobile(inputs, num_classes)
-    for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='on_cpu'):
+    for v in tf.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope='on_cpu'):
       self.assertDeviceEqual(v.device, '/cpu:0')
-    for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='on_gpu'):
+    for v in tf.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope='on_gpu'):
       self.assertDeviceEqual(v.device, '/gpu:0')
 
   def testUnknownBatchSizeMobileModel(self):
