@@ -25,9 +25,9 @@ from datasets import dataset_factory
 from nets import mobilenet_v1
 from preprocessing import preprocessing_factory
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
-flags = tf.app.flags
+flags = tf.compat.v1.app.flags
 
 flags.DEFINE_string('master', '', 'Session master')
 flags.DEFINE_integer('batch_size', 250, 'Batch size')
@@ -123,8 +123,8 @@ def build_model():
           depth_multiplier=FLAGS.depth_multiplier,
           num_classes=FLAGS.num_classes)
 
-    if FLAGS.quantize:
-      tf.contrib.quantize.create_eval_graph()
+    #if FLAGS.quantize:
+    #  #tf.contrib.quantize.create_eval_graph()
 
     eval_ops = metrics(logits, labels)
 
@@ -149,4 +149,4 @@ def main(unused_arg):
 
 
 if __name__ == '__main__':
-  tf.app.run(main)
+  tf.compat.v1.app.run(main)

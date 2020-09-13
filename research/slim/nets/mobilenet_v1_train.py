@@ -24,9 +24,9 @@ from datasets import dataset_factory
 from nets import mobilenet_v1
 from preprocessing import preprocessing_factory
 
-slim = tf.contrib.slim
+import tf_slim as slim
 
-flags = tf.app.flags
+flags = tf.compat.v1.app.flags
 
 flags.DEFINE_string('master', '', 'Session master')
 flags.DEFINE_integer('task', 0, 'Task')
@@ -135,8 +135,8 @@ def build_model():
     # Call rewriter to produce graph with fake quant ops and folded batch norms
     # quant_delay delays start of quantization till quant_delay steps, allowing
     # for better model accuracy.
-    if FLAGS.quantize:
-      tf.contrib.quantize.create_training_graph(quant_delay=get_quant_delay())
+    #if FLAGS.quantize:
+    #  tf.contrib.quantize.create_training_graph(quant_delay=get_quant_delay())
 
     total_loss = tf.losses.get_total_loss(name='total_loss')
     # Configure the learning rate using an exponential decay.
@@ -209,4 +209,4 @@ def main(unused_arg):
 
 
 if __name__ == '__main__':
-  tf.app.run(main)
+  tf.compat.v1.app.run(main)

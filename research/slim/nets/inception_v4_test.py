@@ -20,6 +20,7 @@ from __future__ import print_function
 import tensorflow as tf
 
 from nets import inception
+import tf_slim as slim
 
 
 class InceptionTest(tf.test.TestCase):
@@ -158,9 +159,9 @@ class InceptionTest(tf.test.TestCase):
       inception.inception_v4(inputs, num_classes)
     with tf.variable_scope('on_gpu'), tf.device('/gpu:0'):
       inception.inception_v4(inputs, num_classes)
-    for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='on_cpu'):
+    for v in tf.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope='on_cpu'):
       self.assertDeviceEqual(v.device, '/cpu:0')
-    for v in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='on_gpu'):
+    for v in tf.get_collection(tf.compat.v1.GraphKeys.GLOBAL_VARIABLES, scope='on_gpu'):
       self.assertDeviceEqual(v.device, '/gpu:0')
 
   def testHalfSizeImages(self):
@@ -259,7 +260,7 @@ class InceptionTest(tf.test.TestCase):
     height, width = 299, 299
     num_classes = 1000
     inputs = tf.placeholder(tf.float32, (1, height, width, 3))
-    with tf.contrib.slim.arg_scope(inception.inception_v4_arg_scope()):
+    with tf.slim.arg_scope(inception.inception_v4_arg_scope()):
       inception.inception_v4(inputs, num_classes, is_training=False)
 
     self.assertEqual(tf.global_variables('.*/BatchNorm/gamma:0$'), [])
@@ -268,7 +269,7 @@ class InceptionTest(tf.test.TestCase):
     height, width = 299, 299
     num_classes = 1000
     inputs = tf.placeholder(tf.float32, (1, height, width, 3))
-    with tf.contrib.slim.arg_scope(
+    with tf.slim.arg_scope(
         inception.inception_v4_arg_scope(batch_norm_scale=True)):
       inception.inception_v4(inputs, num_classes, is_training=False)
 
