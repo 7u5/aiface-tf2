@@ -15,7 +15,7 @@
 """Provides data for the balds dataset.
 
 The dataset scripts used to create the dataset can be found at:
-tensorflow/models/research/slim/datasets/download_and_convert_bald.py
+tensorflow/research/slim/datasets/common.py
 """
 
 from __future__ import absolute_import
@@ -24,7 +24,7 @@ from __future__ import print_function
 
 import os
 import sys
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 from datasets import dataset_utils
 

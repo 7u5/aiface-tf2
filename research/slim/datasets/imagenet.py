@@ -34,7 +34,8 @@ from __future__ import print_function
 
 import os
 from six.moves import urllib
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from datasets import dataset_utils
 
