@@ -15,6 +15,7 @@ _conf_train={
     'gpu_set':'0',
     'optimizer':'adam',
     'weight_decay': 0.0004,
+    'learning_rate': 0.01, #lr decay type
     'learning_rate_decay_type':'polynomial', #lr decay type
     'gpu_mem_limit':'0.9',
 }
@@ -36,6 +37,6 @@ _conf={
 root_dir = os.getcwd() + '/'
 #print(root_dir)
 for (k,v) in _conf_include.items():
-    if '_path' in k:
-        sys.path.append(root_dir+v)
+    #if '_path' in k:
+    sys.path.append(root_dir+v)
 TRAIN_MODEL = train_inception.TrainCommon()
