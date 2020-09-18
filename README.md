@@ -1,9 +1,9 @@
 ## tf-slim-inception
-Modify the original code to support tensorflow2.3,  change some of the codes structure to more easy to modify.
+Modify the original code to support tensorflow2.3,  change some of the codes structure that easier to modify.
 
 ### Tensorflow 1.14 codes upgrade to tensorflow 2.3 compitable way, and test ok.
 
-please run export PYTHONPATH="" first if there has PYTHONPATH value.
+please run export PYTHONPATH="" first if there has PYTHONPATH value in Linux env.
 then source path.sh
 
 ### Directory structure change and code changes:
