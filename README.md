@@ -1,4 +1,17 @@
 ## tf-slim-inception
+Modify the original code to support tensorflow2.3,  change some of the codes structure to more easy to modify.
+
+### Tensorflow 1.14 codes upgrade to tensorflow 2.3 compitable way, and test ok.
+
+please run export PYTHONPATH="" first if there has PYTHONPATH value.
+then source path.sh
+
+### Directory structure change and code changes:
+(1) remove models-master dir, research move forward
+(2) remove conf, config.py and train_inception.py move to root dir. config.py now can control model-name, steps, almost training config related configuration.
+(3) remove duplicate {root_dir}/research/slim/datasets/{classname}.py, merge into a common.py
+no longer to need create many files for new class creation. there has a common.py within {root_dir}/research/slim/datasets directory.
+
 tensorflow-slim下的inception_v3、inception_v4、inception_resnet_v2分类模型的数据制作、训练、评估、导出模型、测试。
 训练比较请参考：[InceptionV3、InceptionV4图像分类训练与比较](https://blog.csdn.net/zsf442553199/article/details/85683335)
 
