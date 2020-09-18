@@ -22,34 +22,36 @@ tensorflow-slim下的inception_v3、inception_v4、inception_resnet_v2分类模�
 训练比较请参考：[InceptionV3、InceptionV4图像分类训练与比较](https://blog.csdn.net/zsf442553199/article/details/85683335)
 
 
-## 相关截图
-### 项目结构
+## snapshot(ommit)
+### project structure
 
-{classname}是某个分类任务的名字，与 data/{classname} 样本目录相关
-pos_{classname} 为该分类正例, neg_{classname}为复例
+{classname} is class name of sub task classification， related to ../data/{classname} sample directory
 
-### 数据制作
+if you serving a binary-classification: you can name pos_{classname} is positive sample, neg_{classname} is negative samples
+if you serving multi-classfication: you can try a classname as a taskname, then directory under ../data/{classname}/{sub-classname1-N}
+
+### data generation from image to tfrecord
 image2tfrecord.py
-数据制作请参考flowers
 
-### 训练
+// demo class is "flowers"
+
+### training
 * train.py {classname}
 
-### 评估
+### eval
 * eval.py {classname}
 
-### 可视化
-* show_train.py 训练
-* show_eval.py 评估
+### visualized by tensorboard, need to open 6006/6007 port as tensorboad will serve a web services,
+* show_train.py // default using 6006 port. can be cutomized and view by http://{ip}:6006 // if you have relay machine, you need to open 6006 port mapping in tunnel config.
+* show_eval.py  // default using 6007 port. can be cutomized and view by http://{ip}:6006
 
-### 导出模型
+### export
 * export.py {classname}
 
-### 测试
-eval_single_img.py {classname}
-eval_single_dir.py {classname}
+### test eval after training and export the model
+eval_single_img.py {classname}  // single image
+eval_single_dir.py {classname}  // a directory with many images
 
-### 模型配置文件
-* train_inception.py 配置训练的参数(网络模型选择，训练次数，batch_size、指定GPU等)
-* config.py 配置文件
+### model config 
+* config.py 
 
