@@ -1,3 +1,5 @@
+original Forked from MrZhousf/tf-slim-inception ,i haven't fork inplace becoz i both have tf1 and tf2 version, are incompatible. 
+
 ## tf-slim-inception for inceptionv3/v4/inception_resnet_v2 image clasification's data generation to tfrecord, training, evalue, tensorboard showing, export and test.
 Modify the original code to support tensorflow2.3,  change some of the codes structure that easier to modify.
 
