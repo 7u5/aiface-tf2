@@ -1,4 +1,4 @@
-## tf-slim-inception
+## tf-slim-inception for inceptionv3/v4/inception_resnet_v2 image clasification's data generation to tfrecord, training, evalue, tensorboard showing, export and test.
 Modify the original code to support tensorflow2.3,  change some of the codes structure that easier to modify.
 
 ### Tensorflow 1.14 codes upgrade to tensorflow 2.3 compitable way, and test ok.
