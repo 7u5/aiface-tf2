@@ -3,6 +3,8 @@ Modify the original code to support tensorflow2.3,  change some of the codes str
 
 ### Tensorflow 1.14 codes upgrade to tensorflow 2.3 compitable way, and test ok.
 
+you should install tf-slim in tensorflow 2 by "pip install tf-slim"
+
 please run export PYTHONPATH="" first if there has PYTHONPATH value in Linux env.
 then source path.sh
 
